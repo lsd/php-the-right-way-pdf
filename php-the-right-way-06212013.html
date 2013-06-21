@@ -1,0 +1,788 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>PHP: The Right Way</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="styles/all.css" type="text/css" />
+  <style>
+    body { margin: 1em; }
+    a { color: rgb(0, 96, 172); }
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">PHP: The Right Way</h1>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#getting_started_title">Getting Started</a><ul>
+<li><a href="#use_the_current_stable_version_54_title">Use the Current Stable Version (5.4)</a></li>
+<li><a href="#builtin_web_server_title">Built-in web server</a></li>
+<li><a href="#mac_setup_title">Mac Setup</a></li>
+<li><a href="#windows_setup_title">Windows Setup</a></li>
+<li><a href="#vagrant_title">Vagrant</a></li>
+</ul></li>
+<li><a href="#code_style_guide_title">Code Style Guide</a></li>
+<li><a href="#language_highlights_title">Language Highlights</a><ul>
+<li><a href="#programming_paradigms_title">Programming Paradigms</a><ul>
+<li><a href="#objectoriented_programming">Object-oriented Programming</a></li>
+<li><a href="#functional_programming">Functional Programming</a></li>
+<li><a href="#meta_programming">Meta Programming</a></li>
+</ul></li>
+<li><a href="#namespaces_title">Namespaces</a></li>
+<li><a href="#standard_php_library_title">Standard PHP Library</a></li>
+<li><a href="#command_line_interface_title">Command Line Interface</a></li>
+<li><a href="#xdebug_title">XDebug</a></li>
+</ul></li>
+<li><a href="#dependency_management_title">Dependency Management</a><ul>
+<li><a href="#composer_and_packagist_title">Composer and Packagist</a><ul>
+<li><a href="#how_to_install_composer">How to Install Composer</a></li>
+<li><a href="#how_to_install_composer_manually">How to Install Composer (manually)</a></li>
+<li><a href="#how_to_define_and_install_dependencies">How to Define and Install Dependencies</a></li>
+<li><a href="#updating_your_dependencies">Updating your dependencies</a></li>
+<li><a href="#checking_your_dependencies_for_security_issues">Checking your dependencies for security issues</a></li>
+</ul></li>
+<li><a href="#pear_title">PEAR</a><ul>
+<li><a href="#how_to_install_pear">How to install PEAR</a></li>
+<li><a href="#how_to_install_a_package">How to install a package</a></li>
+<li><a href="#handling_pear_dependencies_with_composer">Handling PEAR dependencies with Composer</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#coding_practices_title">Coding Practices</a><ul>
+<li><a href="#the_basics_title">The Basics</a></li>
+<li><a href="#date_and_time_title">Date and Time</a></li>
+<li><a href="#design_patterns_title">Design Patterns</a></li>
+<li><a href="#exceptions_title">Exceptions</a><ul>
+<li><a href="#spl_exceptions">SPL Exceptions</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#databases_title">Databases</a><ul>
+<li><a href="#pdo">PDO</a></li>
+<li><a href="#abstraction_layers">Abstraction Layers</a></li>
+</ul></li>
+<li><a href="#security_title">Security</a><ul>
+<li><a href="#web_application_security_title">Web Application Security</a></li>
+<li><a href="#password_hashing_title">Password Hashing</a></li>
+<li><a href="#data_filtering_title">Data Filtering</a><ul>
+<li><a href="#sanitization">Sanitization</a></li>
+<li><a href="#validation">Validation</a></li>
+</ul></li>
+<li><a href="#configuration_files_title">Configuration Files</a></li>
+<li><a href="#register_globals_title">Register Globals</a></li>
+<li><a href="#error_reporting_title">Error Reporting</a><ul>
+<li><a href="#development">Development</a></li>
+<li><a href="#production">Production</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#testing_title">Testing</a><ul>
+<li><a href="#test_driven_development_title">Test Driven Development</a><ul>
+<li><a href="#unit_testing">Unit Testing</a></li>
+<li><a href="#integration_testing">Integration Testing</a></li>
+<li><a href="#functional_testing">Functional Testing</a></li>
+</ul></li>
+<li><a href="#behavior_driven_development_title">Behavior Driven Development</a><ul>
+<li><a href="#bdd_links">BDD Links</a></li>
+</ul></li>
+<li><a href="#complementary_testing_tools_title">Complementary Testing Tools</a><ul>
+<li><a href="#tool_links">Tool Links</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#servers_and_deployment_title">Servers and Deployment</a><ul>
+<li><a href="#platform_as_a_service_paas_title">Platform as a Service (PaaS)</a></li>
+<li><a href="#virtual_or_dedicated_servers_title">Virtual or Dedicated Servers</a><ul>
+<li><a href="#nginx_and_phpfpm">nginx and PHP-FPM</a></li>
+<li><a href="#apache_and_php">Apache and PHP</a></li>
+</ul></li>
+<li><a href="#shared_servers_title">Shared Servers</a></li>
+<li><a href="#build_title">Building and Deploying your Application</a><ul>
+<li><a href="#build_automation_tools">Build Automation Tools</a></li>
+<li><a href="#continuous_integration">Continuous Integration</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#caching_title">Caching</a><ul>
+<li><a href="#bytecode_cache_title">Bytecode Cache</a></li>
+<li><a href="#object_caching_title">Object Caching</a></li>
+</ul></li>
+<li><a href="#resources_title">Resources</a><ul>
+<li><a href="#from_the_source">From the Source</a></li>
+<li><a href="#people_to_follow">People to Follow</a></li>
+<li><a href="#mentoring">Mentoring</a></li>
+<li><a href="#php_paas_providers">PHP PaaS Providers</a></li>
+<li><a href="#frameworks_title">Frameworks</a></li>
+<li><a href="#components_title">Components</a></li>
+</ul></li>
+<li><a href="#community_title">Community</a><ul>
+<li><a href="#php_user_groups">PHP User Groups</a></li>
+<li><a href="#php_conferences">PHP Conferences</a></li>
+<li><a>Created and maintained by</a></li>
+<li><a>Project collaborators</a></li>
+<li><a>Project contributors</a></li>
+<li><a>Project sponsors</a></li>
+</ul></li>
+</ul>
+</div>
+
+<h1 id="welcome"><a href="#welcome">Welcome</a></h1>
+<p>There’s a lot of outdated information on the Web that leads new PHP users astray, propagating bad practices and bad code. This must stop. <em>PHP: The Right Way</em> is an easy-to-read, quick reference for PHP best practices, accepted coding standards, and links to authoritative tutorials around the Web.</p>
+
+<h1 id="getting_started_title"><a href="#getting_started_title">Getting Started</a></h1>
+<h2 id="use_the_current_stable_version_54_title"><a href="#use_the_current_stable_version_54_title">Use the Current Stable Version (5.4)</a></h2>
+<p>If you are just getting started with PHP make sure to start with the current stable release of <a href="http://www.php.net/downloads.php">PHP 5.4</a>. PHP has made great strides adding powerful <a href="#language_highlights">new features</a> over the last few years. Don’t let the minor version number difference between 5.2 and 5.4 fool you, it represents <em>major</em> improvements. If you are looking for a function or it’s usage, the documentation on the <a href="http://www.php.net/manual/en/">php.net</a> website will have the answer.</p>
+<h2 id="builtin_web_server_title"><a href="#builtin_web_server_title">Built-in web server</a></h2>
+<p>You can start learning PHP without the hassle of installing and configuring a full-fledged web server (PHP 5.4 required). To start the server, run the following from your terminal in your project’s web root:</p>
+<pre><code>&gt; php -S localhost:8000</code></pre>
+<ul>
+<li><a href="http://www.php.net/manual/en/features.commandline.webserver.php">Learn about the built-in, command line web server</a></li>
+</ul>
+<h2 id="mac_setup_title"><a href="#mac_setup_title">Mac Setup</a></h2>
+<p>OSX comes prepackaged with PHP but it is normally a little behind the latest stable. Lion comes with PHP 5.3.6 and Mountain Lion has 5.3.10.</p>
+<p>To update PHP on OSX you can get it installed through a number of Mac <a href="http://www.php.net/manual/en/install.macosx.packages.php">package managers</a>, with <a href="http://php-osx.liip.ch/">php-osx by Liip</a> being recommended.</p>
+<p>The other option is to <a href="http://www.php.net/manual/en/install.macosx.compile.php">compile it yourself</a>, in that case be sure to have installed either Xcode or Apple’s substitute <a href="https://developer.apple.com/downloads">“Command Line Tools for Xcode”</a> downloadable from Apple’s Mac Developer Center.</p>
+<p>For a complete “all-in-one” package including PHP, Apache web server and MySQL database, all this with a nice control GUI, try <a href="http://www.mamp.info/en/downloads/index.html">MAMP</a>.</p>
+<h2 id="windows_setup_title"><a href="#windows_setup_title">Windows Setup</a></h2>
+<p>PHP is available in several ways for Windows. You can <a href="http://windows.php.net">download the binaries</a> and until recently you could use a ‘.msi’ installer. The installer is no longer supported and stops at PHP 5.3.0.</p>
+<p>For learning and local development you can use the built in webserver with PHP 5.4 so you don’t need to worry about configuring it. If you would like an “all-in-one” which includes a full-blown webserver and MySQL too then tools such as the <a href="http://www.microsoft.com/web/downloads/platform.aspx">Web Platform Installer</a>, <a href="http://www.zend.com/en/products/server-ce/">Zend Server CE</a>, <a href="http://www.apachefriends.org/en/xampp.html">XAMPP</a> and <a href="http://www.wampserver.com/">WAMP</a> will help get a Windows development environment up and running fast. That said, these tools will be a little different from production so be careful of environment differences if you are working on Windows and deploying to Linux.</p>
+<p>If you need to run your production system on Windows then IIS7 will give you the most stable and best performance. You can use <a href="http://phpmanager.codeplex.com/">phpmanager</a> (a GUI plugin for IIS7) to make configuring and managing PHP simple. IIS7 comes with FastCGI built in and ready to go, you just need to configure PHP as a handler. For support and additional resources there is a <a href="http://php.iis.net/">dedicated area on iis.net</a> for PHP.</p>
+<h2 id="vagrant_title"><a href="#vagrant_title">Vagrant</a></h2>
+<p>Running your application on different environments in development and production can lead to strange bugs popping up when you go live. It’s also tricky to keep different development environments up to date with the same version for all libraries used when working with a team of developers.</p>
+<p>If you are developing on Windows and deploying to Linux (or anything non-Windows) or are developing in a team, you should consider using a virtual machine. This sounds tricky, but using <a href="http://vagrantup.com/">Vagrant</a> you can set up a simple virtual machine with only a few steps. These base boxes can then be set up manually, or you can use “provisioning” software such as <a href="http://www.puppetlabs.com/">Puppet</a> or <a href="http://www.opscode.com/">Chef</a> to do this for you. Provisioning the base box is a great way to ensure that multiple boxes are set up in an identical fashion and removes the need for you to maintain complicated “set up” command lists. You can also “destroy” your base box and recreate it without many manual steps, making it easy to create a “fresh” installation.</p>
+<p>Vagrant creates shared folders used to share your code between your host and your virtual machine, meaning you can create and edit your files on your host machine and then run the code inside your virtual machine.</p>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="code_style_guide_title"><a href="#code_style_guide_title">Code Style Guide</a></h1>
+<p>The PHP community is large and diverse, composed of innumerable libraries, frameworks, and components. It is common for PHP developers to choose several of these and combine them into a single project. It is important that PHP code adhere (as close as possible) to a common code style to make it easy for developers to mix and match various libraries for their projects.</p>
+<p>The <a href="http://www.php-fig.org/">Framework Interop Group</a> has proposed and approved a series of style recommendations, known as <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>, <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md">PSR-1</a> and <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md">PSR-2</a>. Don’t let the funny names confuse you, these recommendations are merely a set of rules that some projects like Drupal, Zend, Symfony, CakePHP, phpBB, AWS SDK, FuelPHP, Lithium, etc are starting to adopt. You can use them for your own projects, or continue to use your own personal style.</p>
+<p>Ideally you should write PHP code that adheres to a known standard. This could be any combination of PSR’s, or one of the coding standards made by PEAR or Zend. This means other developers can easily read and work with your code, and applications that implement the components can have consistency even when working with lots of third-party code.</p>
+<ul>
+<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">Read about PSR-0</a></li>
+<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md">Read about PSR-1</a></li>
+<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md">Read about PSR-2</a></li>
+<li><a href="http://pear.php.net/manual/en/standards.php">Read about PEAR Coding Standards</a></li>
+<li><a href="http://framework.zend.com/wiki/display/ZFDEV2/Coding+Standards">Read about Zend Coding Standards</a></li>
+</ul>
+<p>You can use <a href="http://pear.php.net/package/PHP_CodeSniffer/">PHP_CodeSniffer</a> to check code against any one of these recommendations, and plugins for text editors like <a href="https://github.com/benmatselby/sublime-phpcs">Sublime Text 2</a> to be given real time feedback.</p>
+<p>Use Fabien Potencier’s <a href="http://cs.sensiolabs.org/">PHP Coding Standards Fixer</a> to automatically modify your code syntax so that it conforms with these standards, saving you from fixing each problem by hand.</p>
+<p>English is preferred for all symbol names and code infrastructure. Comments may be written in any language easily readable by all current and future parties who may be working on the codebase.</p>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="language_highlights_title"><a href="#language_highlights_title">Language Highlights</a></h1>
+<h2 id="programming_paradigms_title"><a href="#programming_paradigms_title">Programming Paradigms</a></h2>
+<p>PHP is a flexible, dynamic language that supports a variety of programming techniques. It has evolved dramatically over the years, notably adding a solid object-oriented model in PHP 5.0 (2004), anonymous functions and namespaces in PHP 5.3 (2009), and traits in PHP 5.4 (2012).</p>
+<h3 id="objectoriented_programming"><a href="#objectoriented_programming">Object-oriented Programming</a></h3>
+<p>PHP has a very complete set of object-oriented programming features including support for classes, abstract classes, interfaces, inheritance, constructors, cloning, exceptions, and more.</p>
+<ul>
+<li><a href="http://www.php.net/manual/en/language.oop5.php">Read about Object-oriented PHP</a></li>
+<li><a href="http://www.php.net/traits">Read about Traits</a></li>
+</ul>
+<h3 id="functional_programming"><a href="#functional_programming">Functional Programming</a></h3>
+<p>PHP supports first-class function, meaning that a function can be assigned to a variable. Both user defined and built-in functions can be referenced by a variable and invoked dynamically. Functions can be passed as arguments to other functions (feature called Higher-order functions) and function can return other functions.</p>
+<p>Recursion, a feature that allows a function to call itself is supported by the language, but most of the PHP code focus on iteration.</p>
+<p>New anonymous functions (with support for closures) are present since PHP 5.3 (2009).</p>
+<p>PHP 5.4 added the ability to bind closures to an object’s scope and also improved support for callables such that they can be used interchangeably with anonymous functions in almost all cases.</p>
+<ul>
+<li>Continue reading on <a href="/pages/Functional-Programming.html">Functional Programming in PHP</a></li>
+<li><a href="http://www.php.net/manual/en/functions.anonymous.php">Read about Anonymous Functions</a></li>
+<li><a href="http://php.net/manual/en/class.closure.php">Read about the Closure class</a></li>
+<li><a href="https://wiki.php.net/rfc/closures">More details in the Closures RFC</a></li>
+<li><a href="http://php.net/manual/en/language.types.callable.php">Read about Callables</a></li>
+<li><a href="http://php.net/manual/en/function.call-user-func-array.php">Read about dynamically invoking functions with <code>call_user_func_array</code></a></li>
+</ul>
+<h3 id="meta_programming"><a href="#meta_programming">Meta Programming</a></h3>
+<p>PHP supports various forms of meta programming through mechanisms like the Reflection API and Magic Methods. There are many Magic Methods available like <code>__get()</code>, <code>__set()</code>, <code>__clone()</code>, <code>__toString()</code>, <code>__invoke()</code>, etc. that allow developers to hook into class behavior. Ruby developers often say that PHP is lacking <code>method_missing</code>, but it is available as <code>__call()</code> and <code>__callStatic()</code>.</p>
+<ul>
+<li><a href="http://php.net/manual/en/language.oop5.magic.php">Read about Magic Methods</a></li>
+<li><a href="http://www.php.net/manual/en/intro.reflection.php">Read about Reflection</a></li>
+</ul>
+<h2 id="namespaces_title"><a href="#namespaces_title">Namespaces</a></h2>
+<p>As mentioned above, the PHP community has a lot of developers creating lots of code. This means that one library’s PHP code may use the same class name as another library. When both libraries are used in the same namespace, they collide and cause trouble.</p>
+<p><em>Namespaces</em> solve this problem. As described in the PHP reference manual, namespaces may be compared to operating system directories that <em>namespace</em> files; two files with the same name may co-exist in separate directories. Likewise, two PHP classes with the same name may co-exist in separate PHP namespaces. It’s as simple as that.</p>
+<p>It is important for you to namespace your code so that it may be used by other developers without fear of colliding with other libraries.</p>
+<p>One recommended way to use namespaces is outlined in <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>, which aims to provide a standard file, class and namespace convention to allow plug-and-play code.</p>
+<ul>
+<li><a href="http://php.net/manual/en/language.namespaces.php">Read about Namespaces</a></li>
+<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">Read about PSR-0</a></li>
+</ul>
+<h2 id="standard_php_library_title"><a href="#standard_php_library_title">Standard PHP Library</a></h2>
+<p>The Standard PHP Library (SPL) is packaged with PHP and provides a collection of classes and interfaces. It is made up primarily of commonly needed datastructure classes (stack, queue, heap, and so on), and iterators which can traverse over these datastructures or your own classes which implement SPL interfaces.</p>
+<ul>
+<li><a href="http://php.net/manual/en/book.spl.php">Read about the SPL</a></li>
+</ul>
+<h2 id="command_line_interface_title"><a href="#command_line_interface_title">Command Line Interface</a></h2>
+<p>PHP was created primarily to write web applications, but it’s also useful for scripting command line interface (CLI) programs. Command line PHP programs can help you automate common tasks like testing, deployment, and application administrativia.</p>
+<p>CLI PHP programs are powerful because you can use your app’s code directly without having to create and secure a web GUI for it. Just be sure not to put your CLI PHP scripts in your public web root!</p>
+<p>Try running PHP from your command line:</p>
+<pre><code>&gt; php -i</code></pre>
+<p>The <code>-i</code> option will print your PHP configuration just like the <a href="http://php.net/manual/en/function.phpinfo.php"><code>phpinfo</code></a> function.</p>
+<p>The <code>-a</code> option provides an interactive shell, similar to ruby’s IRB or python’s interactive shell. There are a number of other useful <a href="http://www.php.net/manual/en/features.commandline.options.php">command line options</a>, too.</p>
+<p>Let’s write a simple “Hello, $name” CLI program. To try it out, create a file named <code>hello.php</code>, as below.</p>
+<pre><code>&lt;?php
+if ($argc != 2) {
+    echo &quot;Usage: php hello.php [name].\n&quot;;
+    exit(1);
+}
+$name = $argv[1];
+echo &quot;Hello, $name\n&quot;;</code></pre>
+<p>PHP sets up two special variables based on the arguments your script is run with. <a href="http://php.net/manual/en/reserved.variables.argc.php"><code>$argc</code></a> is an integer variable containing the argument <em>count</em> and <a href="http://php.net/manual/en/reserved.variables.argv.php"><code>$argv</code></a> is an array variable containing each argument’s <em>value</em>. The first argument is always the name of your PHP script file, in this case <code>hello.php</code>.</p>
+<p>The <code>exit()</code> expression is used with a non zero number to let the shell know that the command failed. Commonly used exit codes can be found <a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&amp;topic=sysexits">here</a></p>
+<p>To run our script, above, from the command line:</p>
+<pre><code>&gt; php hello.php
+Usage: php hello.php [name]
+&gt; php hello.php world
+Hello, world</code></pre>
+<ul>
+<li><a href="http://php.net/manual/en/features.commandline.php">Learn about running PHP from the command line</a></li>
+<li><a href="http://www.php.net/manual/en/install.windows.commandline.php">Learn about setting up Windows to run PHP from the command line</a></li>
+</ul>
+<h2 id="xdebug_title"><a href="#xdebug_title">XDebug</a></h2>
+<p>One of the most useful tools in software development is a proper debugger. It allows you to trace the execution of your code and monitor the contents of the stack. XDebug, PHP’s debugger, can be utilized by various IDEs to provide Breakpoints and stack inspection. It can also allow tools like PHPUnit and KCacheGrind to perform code coverage analysis and code profiling.</p>
+<p>If you find yourself in a bind, willing to resort to var_dump/print_r, and you still can’t find the solution - maybe you need to use the debugger.</p>
+<p><a href="http://xdebug.org/docs/install">Installing XDebug</a> can be tricky, but one of its most important features is “Remote Debugging” - if you develop code locally and then test it inside a VM or on another server, Remote Debugging is the feature that you will want to enable right away.</p>
+<p>Traditionally, you will modify your Apache VHost or .htaccess file with these values:</p>
+<pre><code>php_value xdebug.remote_host=192.168.?.?
+php_value xdebug.remote_port=9000</code></pre>
+<p>The “remote host” and “remote port” will correspond to your local computer and the port that you configure your IDE to listen on. Then it’s just a matter of putting your IDE into “listen for connections” mode, and loading the URL:</p>
+<pre><code>http://your-website.example.com/index.php?XDEBUG_SESSION_START=1</code></pre>
+<p>Your IDE will now intercept the current state as the script executes, allowing you to set breakpoints and probe the values in memory.</p>
+<ul>
+<li><a href="http://xdebug.org/docs/">Learn more about XDebug</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="dependency_management_title"><a href="#dependency_management_title">Dependency Management</a></h1>
+<p>There are a ton of PHP libraries, frameworks, and components to choose from. Your project will likely use several of them — these are project dependencies. Until recently, PHP did not have a good way to manage these project dependencies. Even if you managed them manually, you still had to worry about autoloaders. No more.</p>
+<p>Currently there are two major package management systems for PHP - Composer and PEAR. Which one is right for you? The answer is both.</p>
+<ul>
+<li>Use <strong>Composer</strong> when managing dependencies for a single project.</li>
+<li>Use <strong>PEAR</strong> when managing dependencies for PHP as a whole on your system.</li>
+</ul>
+<p>In general, Composer packages will be available only in the projects that you explicitly specify whereas a PEAR package would be available to all of your PHP projects. While PEAR might sound like the easier approach at first glance, there are advantages to using a project-by-project approach to your dependencies.</p>
+<h2 id="composer_and_packagist_title"><a href="#composer_and_packagist_title">Composer and Packagist</a></h2>
+<p>Composer is a <strong>brilliant</strong> dependency manager for PHP. List your project’s dependencies in a <code>composer.json</code> file and, with a few simple commands, Composer will automatically download your project’s dependencies and setup autoloading for you.</p>
+<p>There are already a lot of PHP libraries that are compatible with Composer, ready to be used in your project. These “packages” are listed on <a href="http://packagist.org/">Packagist</a>, the official repository for Composer-compatible PHP libraries.</p>
+<h3 id="how_to_install_composer"><a href="#how_to_install_composer">How to Install Composer</a></h3>
+<p>You can install Composer locally (in your current working directory; though this is no longer recommended) or globally (e.g. /usr/local/bin). Let’s assume you want to install Composer locally. From your project’s root directory:</p>
+<pre><code>curl -s https://getcomposer.org/installer | php</code></pre>
+<p>This will download <code>composer.phar</code> (a PHP binary archive). You can run this with <code>php</code> to manage your project dependencies. <strong>Please Note:</strong> If you pipe downloaded code directly into an interpreter, please read the code online first to confirm it is safe.</p>
+<h3 id="how_to_install_composer_manually"><a href="#how_to_install_composer_manually">How to Install Composer (manually)</a></h3>
+<p>Manually installing Composer is an advanced technique; however, there are various reasons why a developer might prefer this method vs. using the interactive installation routine. The interactive installation checks your PHP installation to ensure that:</p>
+<ul>
+<li>a sufficient version of PHP is being used</li>
+<li><code>.phar</code> files can be executed correctly</li>
+<li>certain directory permissions are sufficient</li>
+<li>certain problematic extensions are not loaded</li>
+<li>certain <code>php.ini</code> settings are set</li>
+</ul>
+<p>Since a manual installation performs none of these checks, you have to decide whether the trade-off is worth it for you. As such, below is how to obtain Composer manually:</p>
+<pre><code>curl -s https://getcomposer.org/composer.phar -o $HOME/local/bin/composer
+chmod +x $HOME/local/bin/composer</code></pre>
+<p>The path <code>$HOME/local/bin</code> (or a directory of your choice) should be in your <code>$PATH</code> environment variable. This will result in a <code>composer</code> command being available.</p>
+<p>When you come across documentation that states to run Composer as <code>php composer.phar install</code>, you can substitute that with:</p>
+<pre><code>composer install</code></pre>
+<h3 id="how_to_define_and_install_dependencies"><a href="#how_to_define_and_install_dependencies">How to Define and Install Dependencies</a></h3>
+<p>Composer keeps track of your project’s dependencies in a file called <code>composer.json</code>. You can manage it by hand if you like, or use Composer itself. The <code>php composer.phar require</code> command adds a project dependency and if you don’t have a <code>composer.json</code> file, one will be created. Here’s an example that adds <a href="http://twig.sensiolabs.org">Twig</a> as a dependency of your project. Run it in your project’s root directory where you’ve downloaded <code>composer.phar</code>:</p>
+<pre><code>php composer.phar require twig/twig:~1.8</code></pre>
+<p>Alternatively the <code>php composer.phar init</code> command will guide you through creating a full <code>composer.json</code> file for your project. Either way, once you’ve created your <code>composer.json</code> file you can tell Composer to download and install your dependencies into the <code>vendors/</code> directory. This also applies to projects you’ve downloaded that already provide a <code>composer.json</code> file:</p>
+<pre><code>php composer.phar install</code></pre>
+<p>Next, add this line to your application’s primary PHP file; this will tell PHP to use Composer’s autoloader for your project dependencies.</p>
+<pre><code>&lt;?php
+require &#39;vendor/autoload.php&#39;;</code></pre>
+<p>Now you can use your project dependencies, and they’ll be autoloaded on demand.</p>
+<h3 id="updating_your_dependencies"><a href="#updating_your_dependencies">Updating your dependencies</a></h3>
+<p>Composer creates a file called <code>composer.lock</code> which stores the exact version of each package it downloaded when you first ran <code>php composer.phar install</code>. If you share your project with other coders and the <code>composer.lock</code> file is part of your distribution, when they run <code>php composer.phar install</code> they’ll get the same versions as you. To update your dependencies, run <code>php composer.phar update</code>.</p>
+<p>This is most useful when you define your version requirements flexibly. For instance a version requirement of ~1.8 means “anything newer than 1.8.0, but less than 2.0.x-dev”. You can also use the <code>*</code> wildcard as in <code>1.8.*</code>. Now Composer’s <code>php composer.phar update</code> command will upgrade all your dependencies to the newest version that fits the restrictions you define.</p>
+<h3 id="checking_your_dependencies_for_security_issues"><a href="#checking_your_dependencies_for_security_issues">Checking your dependencies for security issues</a></h3>
+<p>The <a href="https://security.sensiolabs.org/">Security Advisories Checker</a> is a web service and a command-line tool, both will examine your <code>composer.lock</code> file and tell you if you need to update any of your dependencies.</p>
+<ul>
+<li><a href="http://getcomposer.org/doc/00-intro.md">Learn about Composer</a></li>
+</ul>
+<h2 id="pear_title"><a href="#pear_title">PEAR</a></h2>
+<p>Another veteran package manager that many PHP developers enjoy is <a href="http://pear.php.net/">PEAR</a>. It behaves much the same way as Composer, but has some noteable differences.</p>
+<p>PEAR requires each package to have a specific structure, which means that the author of the package must prepare it for usage with PEAR. Using a project which was not prepared to work with PEAR is not possible.</p>
+<p>PEAR installs packages globally, which means after installing them once they are available to all projects on that server. This can be good if many projects rely on the same package with the same version but might lead to problems if version conflicts between two projects arise.</p>
+<h3 id="how_to_install_pear"><a href="#how_to_install_pear">How to install PEAR</a></h3>
+<p>You can install PEAR by downloading the phar installer and executing it. The PEAR documentation has detailed <a href="http://pear.php.net/manual/en/installation.getting.php">install instructions</a> for every operating system.</p>
+<p>If you are using Linux, you can also have a look at your distribution package manager. Debian and Ubuntu for example have a apt <code>php-pear</code> package.</p>
+<h3 id="how_to_install_a_package"><a href="#how_to_install_a_package">How to install a package</a></h3>
+<p>If the package is listed on the <a href="http://pear.php.net/packages.php">PEAR packages list</a>, you can install it by specifying the official name:</p>
+<pre><code>pear install foo</code></pre>
+<p>If the package is hosted on another channel, you need to <code>discover</code> the channel first and also specify it when installing. See the <a href="http://pear.php.net/manual/en/guide.users.commandline.channels.php">Using channel docs</a> for more information on this topic.</p>
+<ul>
+<li><a href="http://pear.php.net/">Learn about PEAR</a></li>
+</ul>
+<h3 id="handling_pear_dependencies_with_composer"><a href="#handling_pear_dependencies_with_composer">Handling PEAR dependencies with Composer</a></h3>
+<p>If you are already using <a href="/#composer_and_packagist">Composer</a> and you would like to install some PEAR code too, you can use Composer to handle your PEAR dependencies. This example will install code from <code>pear2.php.net</code>:</p>
+<pre><code>{
+    &quot;repositories&quot;: [
+        {
+            &quot;type&quot;: &quot;pear&quot;,
+            &quot;url&quot;: &quot;http://pear2.php.net&quot;
+        }
+    ],
+    &quot;require&quot;: {
+        &quot;pear-pear2/PEAR2_Text_Markdown&quot;: &quot;*&quot;,
+        &quot;pear-pear2/PEAR2_HTTP_Request&quot;: &quot;*&quot;
+    }
+}</code></pre>
+<p>The first section <code>&quot;repositories&quot;</code> will be used to let Composer know it should “initialise” (or “discover” in PEAR terminology) the pear repo. Then the require section will prefix the package name like this:</p>
+<blockquote>
+<p>pear-channel/Package</p>
+</blockquote>
+<p>The “pear” prefix is hardcoded to avoid any conflicts, as a pear channel could be the same as another packages vendor name for example, then the channel short name (or full URL) can be used to reference which channel the package is in.</p>
+<p>When this code is installed it will be available in your vendor directory and automatically available through the Composer autoloader:</p>
+<blockquote>
+<p>vendor/pear-pear2.php.net/PEAR2_HTTP_Request/pear2/HTTP/Request.php</p>
+</blockquote>
+<p>To use this PEAR package simply reference it like so:</p>
+<pre><code>$request = new pear2\HTTP\Request();</code></pre>
+<ul>
+<li><a href="http://getcomposer.org/doc/05-repositories.md#pear">Learn more about using PEAR with Composer</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="coding_practices_title"><a href="#coding_practices_title">Coding Practices</a></h1>
+<h2 id="the_basics_title"><a href="#the_basics_title">The Basics</a></h2>
+<p>PHP is a vast language that allows coders of all levels the ability to produce code not only quickly, but efficiently. However while advancing through the language, we often forget the basics that we first learnt (or overlooked) in favor of short cuts and/or bad habits. To help combat this common issue, this section is aimed at reminding coders of the basic coding practices within PHP.</p>
+<ul>
+<li>Continue reading on <a href="/pages/The-Basics.html">The Basics</a></li>
+</ul>
+<h2 id="date_and_time_title"><a href="#date_and_time_title">Date and Time</a></h2>
+<p>PHP has a class named DateTime to help you when reading, writing, comparing or calculating with date and time. There are many date and time related functions in PHP besides DateTime, but it provides nice object-oriented interface to most common uses. It can handle time zones, but that is outside this short introduction.</p>
+<p>To start working with DateTime, convert raw date and time string to an object with <code>createFromFormat()</code> factory method or do <code>new \DateTime</code> to get the current date and time. Use <code>format()</code> method to convert DateTime back to a string for output.</p>
+<pre><code>&lt;?php
+$raw = &#39;22. 11. 1968&#39;;
+$start = \DateTime::createFromFormat(&#39;d. m. Y&#39;, $raw);
+
+echo &#39;Start date: &#39; . $start-&gt;format(&#39;m/d/Y&#39;) . &quot;\n&quot;;</code></pre>
+<p>Calculating with DateTime is possible with the DateInterval class. DateTime has methods like <code>add()</code> and <code>sub()</code> that take a DateInterval as an argument. Do not write code that expect same number of seconds in every day, both daylight saving and timezone alterations will break that assumption. Use date intervals instead. To calculate date difference use the <code>diff()</code> method. It will return new DateInterval, which is super easy to display.</p>
+<pre><code>&lt;?php
+// create a copy of $start and add one month and 6 days
+$end = clone $start;
+$end-&gt;add(new \DateInterval(&#39;P1M6D&#39;));
+
+$diff = $end-&gt;diff($start);
+echo &#39;Difference: &#39; . $diff-&gt;format(&#39;%m month, %d days (total: %a days)&#39;) . &quot;\n&quot;;
+// Difference: 1 month, 6 days (total: 37 days)</code></pre>
+<p>On DateTime objects you can use standard comparison:</p>
+<pre><code>&lt;?php
+if ($start &lt; $end) {
+    echo &quot;Start is before end!\n&quot;;
+}</code></pre>
+<p>One last example to demonstrate the DatePeriod class. It is used to iterate over recurring events. It can take two DateTime objects, start and end, and the interval for which it will return all events in between.</p>
+<pre><code>&lt;?php
+// output all thursdays between $start and $end
+$periodInterval = \DateInterval::createFromDateString(&#39;first thursday&#39;);
+$periodIterator = new \DatePeriod($start, $periodInterval, $end, \DatePeriod::EXCLUDE_START_DATE);
+foreach ($periodIterator as $date) {
+    // output each date in the period
+    echo $date-&gt;format(&#39;m/d/Y&#39;) . &#39; &#39;;
+}</code></pre>
+<ul>
+<li><a href="http://www.php.net/manual/book.datetime.php">Read about DateTime</a></li>
+<li><a href="http://www.php.net/manual/function.date.php">Read about date formatting</a> (accepted date format string options)</li>
+</ul>
+<h2 id="design_patterns_title"><a href="#design_patterns_title">Design Patterns</a></h2>
+<p>When you are building your application it is helpful to use common patterns in your code and common patterns for the overall structure of your project. Using common patterns is helpful because it makes it much easier to manage your code and lets other developers quickly understand how everything fits together.</p>
+<p>If you use a framework then most of the higher level code and project structure will be based on that framework, so a lot of the pattern decisions are made for you. But it is still up to you to pick out the best patterns to follow in the code you build on top of the framework. If, on the other hand, you are not using a framework to build your application then you have to find the patterns that best suit the type and size of application that you’re building.</p>
+<ul>
+<li>Continue reading on <a href="/pages/Design-Patterns.html">Design Patterns</a></li>
+</ul>
+<h2 id="exceptions_title"><a href="#exceptions_title">Exceptions</a></h2>
+<p>Exceptions are a standard part of most popular programming languages, but they are often overlooked by PHP programmers. Languages like Ruby are extremely Exception heavy, so whenever something goes wrong such as a HTTP request failing, or a DB query goes wrong, or even if an image asset could not be found, Ruby (or the gems being used) will throw an exception to the screen meaning you instantly know there is a mistake.</p>
+<p>PHP itself is fairly lax with this, and a call to <code>file_get_contents()</code> will usually just get you a <code>FALSE</code> and a warning. Many older PHP frameworks like CodeIgniter will just return a false, log a message to their proprietary logs and maybe let you use a method like <code>$this-&gt;upload-&gt;get_error()</code> to see what went wrong. The problem here is that you have to go looking for a mistake and check the docs to see what the error method is for this class, instead of having it made extremely obvious.</p>
+<p>Another problem is when classes automatically throw an error to the screen and exit the process. When you do this you stop another developer from being able to dynamically handle that error. Exceptions should be thrown to make a developer aware of an error, then they can choose how to handle this. E.g:</p>
+<pre><code>&lt;?php
+$email = new Fuel\Email;
+$email-&gt;subject(&#39;My Subject&#39;);
+$email-&gt;body(&#39;How the heck are you?&#39;);
+$email-&gt;to(&#39;guy@example.com&#39;, &#39;Some Guy&#39;);
+
+try
+{
+    $email-&gt;send();
+}
+catch(Fuel\Email\ValidationFailedException $e)
+{
+    // The validation failed
+}
+catch(Fuel\Email\SendingFailedException $e)
+{
+    // The driver could not send the email
+}</code></pre>
+<h3 id="spl_exceptions"><a href="#spl_exceptions">SPL Exceptions</a></h3>
+<p>The generic <code>Exception</code> class provides very little debugging context for the developer; however, to remedy this, it is possible to create a specialized <code>Exception</code> type by sub-classing the generic <code>Exception</code> class:</p>
+<pre><code>&lt;?php
+class ValidationException extends Exception {}</code></pre>
+<p>This means you can add multiple catch blocks and handle different Exceptions differently. This can lead to the creation of a <em>lot</em> of custom Exceptions, some of which could have been avoided using the SPL Exceptions provided in the <a href="/#standard_php_library">SPL extension</a>.</p>
+<p>If for example you use the <code>__call()</code> Magic Method and an invalid method is requested then instead of throwing a standard Exception which is vague, or creating a custom Exception just for that, you could just <code>throw new BadFunctionCallException;</code>.</p>
+<ul>
+<li><a href="http://php.net/manual/en/language.exceptions.php">Read about Exceptions</a></li>
+<li><a href="http://php.net/manual/en/spl.exceptions.php">Read about SPL Exceptions</a></li>
+<li><a href="http://www.brandonsavage.net/exceptional-php-nesting-exceptions-in-php/">Nesting Exceptions In PHP</a></li>
+<li><a href="http://ralphschindler.com/2010/09/15/exception-best-practices-in-php-5-3">Exception Best Practices in PHP 5.3</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="databases_title"><a href="#databases_title">Databases</a></h1>
+<p>Many times your PHP code will use a database to persist information. You have a few options to connect and interact with your database. The recommended option <em>until PHP 5.1.0</em> was to use native drivers such as <a href="http://php.net/mysql">mysql</a>, <a href="http://php.net/mysqli">mysqli</a>, <a href="http://php.net/pgsql">pgsql</a>, etc.</p>
+<p>Native drivers are great if you are only using ONE database in your application, but if, for example, you are using MySQL and a little bit of MSSQL, or you need to connect to an Oracle database, then you will not be able to use the same drivers. You’ll need to learn a brand new API for each database — and that can get silly.</p>
+<p>As an extra note on native drivers, the mysql extension for PHP is no longer in active development, and the official status since PHP 5.4.0 is “Long term deprecation”. This means it will be removed within the next few releases, so by PHP 5.6 (or whatever comes after 5.5) it may well be gone. If you are using <code>mysql_connect()</code> and <code>mysql_query()</code> in your applications then you will be faced with a rewrite at some point down the line, so the best option is to replace mysql usage with mysqli or PDO in your applications within your own development schedules so you won’t be rushed later on. <em>If you are starting from scratch then absolutely do not use the mysql extension: use the <a href="http://php.net/mysqli">MySQLi extension</a>, or use PDO.</em></p>
+<ul>
+<li><a href="http://php.net/manual/en/mysqlinfo.api.choosing.php">PHP: Choosing an API for MySQL</a></li>
+</ul>
+<h2 id="pdo"><a href="#pdo">PDO</a></h2>
+<p>PDO is a database connection abstraction library — built into PHP since 5.1.0 — that provides a common interface to talk with many different databases. PDO will not translate your SQL queries or emulate missing features; it is purely for connecting to multiple types of database with the same API.</p>
+<p>More importantly, <code>PDO</code> allows you to safely inject foreign input (e.g. IDs) into your SQL queries without worrying about database SQL injection attacks. This is possible using PDO statements and bound parameters.</p>
+<p>Let’s assume a PHP script receives a numeric ID as a query parameter. This ID should be used to fetch a user record from a database. This is the <code>wrong</code> way to do this:</p>
+<pre><code>&lt;?php
+$pdo = new PDO(&#39;sqlite:users.db&#39;);
+$pdo-&gt;query(&quot;SELECT name FROM users WHERE id = &quot; . $_GET[&#39;id&#39;]); // &lt;-- NO!</code></pre>
+<p>This is terrible code. You are inserting a raw query parameter into a SQL query. This will get you hacked in a heartbeat. Just imagine if a hacker passes in an inventive <code>id</code> parameter by calling a URL like <code>http://domain.com/?id=1%3BDELETE+FROM+users</code>. This will set the <code>$_GET['id']</code> variable to <code>1;DELETE FROM users</code> which will delete all of your users! Instead, you should sanitize the ID input using PDO bound parameters.</p>
+<pre><code>&lt;?php
+$pdo = new PDO(&#39;sqlite:users.db&#39;);
+$stmt = $pdo-&gt;prepare(&#39;SELECT name FROM users WHERE id = :id&#39;);
+$stmt-&gt;bindParam(&#39;:id&#39;, $_GET[&#39;id&#39;], PDO::PARAM_INT); //&lt;-- Automatically sanitized by PDO
+$stmt-&gt;execute();</code></pre>
+<p>This is correct code. It uses a bound parameter on a PDO statement. This escapes the foreign input ID before it is introduced to the database preventing potential SQL injection attacks.</p>
+<ul>
+<li><a href="http://www.php.net/manual/en/book.pdo.php">Learn about PDO</a></li>
+</ul>
+<p>You should also be aware that database connections use up resources and it was not unheard-of to have resources exhausted if connections were not implicitly closed, however this was more common in other languages. Using PDO you can implicitly close the connection by destroying the object by ensuring all remaining references to it are deleted, ie. set to NULL. If you don’t do this explicitly, PHP will automatically close the connection when your script ends unless of course you are using persistent connections.</p>
+<ul>
+<li><a href="http://php.net/manual/en/pdo.connections.php">Learn about PDO connections</a></li>
+</ul>
+<h2 id="abstraction_layers"><a href="#abstraction_layers">Abstraction Layers</a></h2>
+<p>Many frameworks provide their own abstraction layer which may or may not sit on top of PDO. These will often emulate features for one database system that another is missing from another by wrapping your queries in PHP methods, giving you actual database abstraction. This will of course add a little overhead, but if you are building a portable application that needs to work with MySQL, PostgreSQL and SQLite then a little overhead will be worth it the sake of code cleanliness.</p>
+<p>Some abstraction layers have been built using the PSR-0 namespace standard so can be installed in any application you like:</p>
+<ul>
+<li><a href="https://github.com/auraphp/Aura.Sql">Aura SQL</a></li>
+<li><a href="http://www.doctrine-project.org/projects/dbal.html">Doctrine2 DBAL</a></li>
+<li><a href="http://packages.zendframework.com/docs/latest/manual/en/index.html#zend-db">ZF2 Db</a></li>
+<li><a href="http://framework.zend.com/manual/en/zend.db.html">ZF1 Db</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="security_title"><a href="#security_title">Security</a></h1>
+<h2 id="web_application_security_title"><a href="#web_application_security_title">Web Application Security</a></h2>
+<p>There are bad people ready and willing to exploit your web application. It is important that you take necessary precautions to harden your web application’s security. Luckily, the fine folks at <a href="https://www.owasp.org/">The Open Web Application Security Project</a> (OWASP) have compiled a comprehensive list of known security issues and methods to protect yourself against them. This is a must read for the security-conscious developer.</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/Guide_Table_of_Contents">Read the OWASP Security Guide</a></li>
+</ul>
+<h2 id="password_hashing_title"><a href="#password_hashing_title">Password Hashing</a></h2>
+<p>Eventually everyone builds a PHP application that relies on user login. Usernames and passwords are stored in a database and later used to authenticate users upon login.</p>
+<p>It is important that you properly <a href="http://en.wikipedia.org/wiki/Cryptographic_hash_function"><em>hash</em></a> passwords before storing them. Password hashing is an irreversible, one way function performed against the users password. This produces a fixed-length string that can not be feasibly reversed. This means you can compare a hash against another to determine if they both came from the same source string, but you can not determine the original string. If passwords are not hashed and your database is accessed by an unauthorized third-party, all user accounts are now compromised. Some users may (unfortunately) use the same password for other services. Therefore, it is important to take security seriously.</p>
+<p><strong>Hashing passwords with <code>password_hash</code></strong></p>
+<p>In PHP 5.5 <code>password_hash</code> will be introduced. At this time it is using BCrypt, the strongest algorithm currently supported by PHP. It will be updated in the future to support more algorithms as needed though. The <code>password_compat</code> library was created to provide forward compatibility for PHP &gt;= 5.3.7.</p>
+<p>Below we hash a string, we then check the hash against a new string. Because our two source strings are different (‘secret-password’ vs. ‘bad-password’) this login will fail.</p>
+<pre><code>                                                                                                                                                                                              
+&lt;?php                                                                                                                                                                                                            
+require &#39;password.php&#39;;
+
+$passwordHash = password_hash(&#39;secret-password&#39;, PASSWORD_DEFAULT);
+
+if (password_verify(&#39;bad-password&#39;, $passwordHash)) {
+    //Correct Password
+} else {
+    //Wrong password
+}</code></pre>
+<ul>
+<li><a href="http://us2.php.net/manual/en/function.password-hash.php">Learn about <code>password_hash</code></a></li>
+<li><a href="https://github.com/ircmaxell/password_compat"><code>password_compat</code> for PHP &gt;= 5.3.7 &amp;&amp; &lt; 5.5</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Cryptographic_hash_function">Learn about hashing in regards to cryptography</a></li>
+<li><a href="https://wiki.php.net/rfc/password_hash">PHP <code>password_hash</code> RFC</a></li>
+</ul>
+<h2 id="data_filtering_title"><a href="#data_filtering_title">Data Filtering</a></h2>
+<p>Never ever (ever) trust foreign input introduced to your PHP code. Always sanitize and validate foreign input before using it in code. The <code>filter_var</code> and <code>filter_input</code> functions can sanitize text and validate text formats (e.g. email addresses).</p>
+<p>Foreign input can be anything: <code>$_GET</code> and <code>$_POST</code> form input data, some values in the <code>$_SERVER</code> superglobal, and the HTTP request body via <code>fopen('php://input', 'r')</code>. Remember, foreign input is not limited to form data submitted by the user. Uploaded and downloaded files, session values, cookie data, and data from third-party web services are foreign input, too.</p>
+<p>While foreign data can be stored, combined, and accessed later, it is still foreign input. Every time you process, output, concatenate, or include data in your code, ask yourself if the data is filtered properly and can it be trusted.</p>
+<p>Data may be <em>filtered</em> differently based on its purpose. For example, when unfiltered foreign input is passed into HTML page output, it can execute HTML and JavaScript on your site! This is known as Cross-Site Scripting (XSS) and can be a very dangerous attack. One way to avoid XSS is to sanitize all user-generated data before outputting it to your page by removing HTML tags with the <code>strip_tags</code> function or escaping characters with special meaning into their respective HTML entities with the <code>htmlentities</code> or <code>htmlspecialchars</code> functions.</p>
+<p>Another example is passing options to be executed on the command line. This can be extremely dangerous (and is usually a bad idea), but you can use the built-in <code>escapeshellarg</code> function to sanitize the executed command’s arguments.</p>
+<p>One last example is accepting foreign input to determine a file to load from the filesystem. This can be exploited by changing the filename to a file path. You need to remove ”/”, “../”, <a href="http://php.net/manual/en/security.filesystem.nullbytes.php">null bytes</a>, or other characters from the file path so it can’t load hidden, non-public, or sensitive files.</p>
+<ul>
+<li><a href="http://www.php.net/manual/en/book.filter.php">Learn about data filtering</a></li>
+<li><a href="http://php.net/manual/en/function.filter-var.php">Learn about <code>filter_var</code></a></li>
+<li><a href="http://www.php.net/manual/en/function.filter-input.php">Learn about <code>filter_input</code></a></li>
+<li><a href="http://php.net/manual/en/security.filesystem.nullbytes.php">Learn about handling null bytes</a></li>
+</ul>
+<h3 id="sanitization"><a href="#sanitization">Sanitization</a></h3>
+<p>Sanitization removes (or escapes) illegal or unsafe characters from foreign input.</p>
+<p>For example, you should sanitize foreign input before including the input in HTML or inserting it into a raw SQL query. When you use bound parameters with <a href="#databases">PDO</a>, it will sanitize the input for you.</p>
+<p>Sometimes it is required to allow some safe HTML tags in the input when including it in the HTML page. This is very hard to do and many avoid it by using other more restricted formatting like Markdown or BBCode, although whitelisting libraries like <a href="http://htmlpurifier.org/">HTML Purifier</a> exists for this reason.</p>
+<p><a href="http://www.php.net/manual/en/filter.filters.sanitize.php">See Sanitization Filters</a></p>
+<h3 id="validation"><a href="#validation">Validation</a></h3>
+<p>Validation ensures that foreign input is what you expect. For example, you may want to validate an email address, a phone number, or age when processing a registration submission.</p>
+<p><a href="http://www.php.net/manual/en/filter.filters.validate.php">See Validation Filters</a></p>
+<h2 id="configuration_files_title"><a href="#configuration_files_title">Configuration Files</a></h2>
+<p>When creating configuration files for your applications, best practices recommend that one of the following methods be followed:</p>
+<ul>
+<li>It is recommended that you store your configuration information where it cannot be accessed directly and pulled in via the file system.</li>
+<li>If you must store your configuration files in the document root, name the files with a <code>.php</code> extension. This ensures that, even if the script is accessed directly, it will not be outputed as plain text.</li>
+<li>Information in configuration files should be protected accordingly, either through encryption or group/user file system permissions</li>
+</ul>
+<h2 id="register_globals_title"><a href="#register_globals_title">Register Globals</a></h2>
+<p><strong>NOTE:</strong> As of PHP 5.4.0 the <code>register_globals</code> setting has been removed and can no longer be used. This is only included as a warning for anyone in the process of upgrading a legacy application.</p>
+<p>When enabled, the <code>register_globals</code> configuration setting that makes several types of variables (including ones from <code>$_POST</code>, <code>$_GET</code> and <code>$_REQUEST</code>) available in the global scope of your application. This can easily lead to security issues as your application cannot effectively tell where the data is coming from.</p>
+<p>For example: <code>$_GET['foo']</code> would be available via <code>$foo</code>, which can override variables that have not been declared. If you are using PHP &lt; 5.4.0 <strong>make sure</strong> that <code>register_globals</code> is <strong>off</strong>.</p>
+<ul>
+<li><a href="http://www.php.net/manual/en/security.globals.php">Register_globals in the PHP manual</a></li>
+</ul>
+<h2 id="error_reporting_title"><a href="#error_reporting_title">Error Reporting</a></h2>
+<p>Error logging can be useful in finding the problem spots in your application, but it can also expose information about the structure of your application to the outside world. To effectively protect your application from issues that could be caused by the output of these messages, you need to configure your server differently in development versus production (live).</p>
+<h3 id="development"><a href="#development">Development</a></h3>
+<p>To show every possible error during <strong>development</strong>, configure the following settings in your <code>php.ini</code>:</p>
+<pre><code>display_errors = On
+display_startup_errors = On
+error_reporting = -1
+log_errors = On</code></pre>
+<blockquote>
+<p>Passing in the value <code>-1</code> will show every possible error, even when new levels and constants are added in future PHP versions. The <code>E_ALL</code> constant also behaves this way as of PHP 5.4. - <a href="http://php.net/manual/function.error-reporting.php">php.net</a></p>
+</blockquote>
+<p>The <code>E_STRICT</code> error level constant was introduced in 5.3.0 and is not part of <code>E_ALL</code>, however it became part of <code>E_ALL</code> in 5.4.0. What does this mean? In terms of reporting every possible error in version 5.3 it means you must use either <code>-1</code> or <code>E_ALL | E_STRICT</code>.</p>
+<p><strong>Reporting every possible error by PHP version</strong></p>
+<ul>
+<li>&lt; 5.3 <code>-1</code> or <code>E_ALL</code></li>
+<li>  5.3 <code>-1</code> or <code>E_ALL | E_STRICT</code></li>
+<li>&gt; 5.3 <code>-1</code> or <code>E_ALL</code></li>
+</ul>
+<h3 id="production"><a href="#production">Production</a></h3>
+<p>To hide errors on your <strong>production</strong> environment, configure your <code>php.ini</code> as:</p>
+<pre><code>display_errors = Off
+display_startup_errors = Off
+error_reporting = E_ALL
+log_errors = On</code></pre>
+<p>With these settings in production, errors will still be logged to the error logs for the web server, but will not be shown to the user. For more information on these settings, see the PHP manual:</p>
+<ul>
+<li><a href="http://php.net/manual/errorfunc.configuration.php#ini.error-reporting">error_reporting</a></li>
+<li><a href="http://php.net/manual/errorfunc.configuration.php#ini.display-errors">display_errors</a></li>
+<li><a href="http://php.net/manual/errorfunc.configuration.php#ini.display-startup-errors">display_startup_errors</a></li>
+<li><a href="http://php.net/manual/errorfunc.configuration.php#ini.log-errors">log_errors</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="testing_title"><a href="#testing_title">Testing</a></h1>
+<p>Writing automated tests for your PHP code is considered a best practice and can lead to well-built applications. Automated tests are a great tool for making sure your application does not break when you are making changes or adding new functionality and should not be ignored.</p>
+<p>There are several different types of testing tools (or frameworks) available for PHP, which use different approaches - all of which are trying to avoid manual testing and the need for large Quality Assurance teams, just to make sure recent changes didn’t break existing functionality.</p>
+<h2 id="test_driven_development_title"><a href="#test_driven_development_title">Test Driven Development</a></h2>
+<p>From <a href="http://en.wikipedia.org/wiki/Test-driven_development">Wikipedia</a>:</p>
+<blockquote>
+<p>Test-driven development (TDD) is a software development process that relies on the repetition of a very short development cycle: first the developer writes a failing automated test case that defines a desired improvement or new function, then produces code to pass that test and finally refactors the new code to acceptable standards. Kent Beck, who is credited with having developed or ‘rediscovered’ the technique, stated in 2003 that TDD encourages simple designs and inspires confidence</p>
+</blockquote>
+<p>There are several different types of testing that you can do for your application</p>
+<h3 id="unit_testing"><a href="#unit_testing">Unit Testing</a></h3>
+<p>Unit Testing is a programming approach to ensure functions, classes and methods are working as expected, from the point you build them all the way through the development cycle. By checking values going in and out of various functions and methods, you can make sure the internal logic is working correctly. By using Dependency Injection and building “mock” classes and stubs you can verify that dependencies are correctly used for even better test coverage.</p>
+<p>When you create a class or function you should create a unit test for each behavior it must have. At a very basic level you should make sure it errors if you send it bad arguments and make sure it works if you send it valid arguments. This will help ensure that when you make changes to this class or function later on in the development cycle that the old functionality continues to work as expected. The only alternative to this would be var_dump() in a test.php, which is no way to build an application - large or small.</p>
+<p>The other use for unit tests is contributing to open source. If you can write a test that shows broken functionality (i.e. fails), then fix it, and show the test passing, patches are much more likely to be accepted. If you run a project which accepts pull requests then you should suggest this as a requirement.</p>
+<p><a href="http://phpunit.de">PHPUnit</a> is the de-facto testing framework for writing unit tests for PHP applications, but there are several alternatives</p>
+<ul>
+<li><a href="http://simpletest.org">SimpleTest</a></li>
+<li><a href="http://www.enhance-php.com/">Enhance PHP</a></li>
+<li><a href="http://punit.smf.me.uk/">PUnit</a></li>
+<li><a href="https://github.com/atoum/atoum">atoum</a></li>
+</ul>
+<h3 id="integration_testing"><a href="#integration_testing">Integration Testing</a></h3>
+<p>From <a href="http://en.wikipedia.org/wiki/Integration_testing">Wikipedia</a>:</p>
+<blockquote>
+<p>Integration testing (sometimes called Integration and Testing, abbreviated “I&amp;T”) is the phase in software testing in which individual software modules are combined and tested as a group. It occurs after unit testing and before validation testing. Integration testing takes as its input modules that have been unit tested, groups them in larger aggregates, applies tests defined in an integration test plan to those aggregates, and delivers as its output the integrated system ready for system testing.</p>
+</blockquote>
+<p>Many of the same tools that can be used for unit testing can be used for integration testing as many of the same principles are used.</p>
+<h3 id="functional_testing"><a href="#functional_testing">Functional Testing</a></h3>
+<p>Sometimes also known as acceptance testing, functional testing consists of using tools to create automated tests that actually use your application instead of just verifying that individual units of code are behaving correctly and that individual units can speak to each other correctly. These tools typically work using real data and simulating actual users of the application.</p>
+<h4 id="functional_testing_tools"><a href="#functional_testing_tools">Functional Testing Tools</a></h4>
+<ul>
+<li><a href="http://seleniumhq.com">Selenium</a></li>
+<li><a href="http://mink.behat.org">Mink</a></li>
+<li><a href="http://codeception.com">Codeception</a> is a full-stack testing framework that includes acceptance testing tools</li>
+</ul>
+<h2 id="behavior_driven_development_title"><a href="#behavior_driven_development_title">Behavior Driven Development</a></h2>
+<p>There are two different types of Behavior-Driven Development (BDD): SpecBDD and StoryBDD. SpecBDD focuses on technical behavior or code, while StoryBDD focuses on business or feature behaviors or interactions. PHP has frameworks for both types of BDD.</p>
+<p>With StoryBDD, you write human-readable stories that describe the behavior of your application. These stories can then be run as actual tests against your application. The framework used in PHP applications for StoryBDD is Behat, which is inspired by Ruby’s <a href="http://cukes.info/">Cucumber</a> project and implements the Gherkin DSL for describing feature behavior.</p>
+<p>With SpecBDD, you write specifications that describe how your actual code should behave. Instead of testing a function or method, you are describing how that function or method should behave. PHP offers the PHPSpec framework for this purpose. This framework is inspired by the <a href="http://rspec.info/">RSpec project</a> for Ruby.</p>
+<h3 id="bdd_links"><a href="#bdd_links">BDD Links</a></h3>
+<ul>
+<li><a href="http://behat.org/">Behat</a>, the StoryBDD framework for PHP, inspired by Ruby’s <a href="http://cukes.info/">Cucumber</a> project;</li>
+<li><a href="http://www.phpspec.net/">PHPSpec</a>, the SpecBDD framework for PHP, inspired by Ruby’s <a href="http://rspec.info/">RSpec</a> project;</li>
+<li><a href="http://www.codeception.com">Codeception</a> is a full-stack testing framework that uses BDD principles.</li>
+</ul>
+<h2 id="complementary_testing_tools_title"><a href="#complementary_testing_tools_title">Complementary Testing Tools</a></h2>
+<p>Besides individual testing and behavior driven frameworks, there are also a number of generic frameworks and helper libraries useful for any preferred approach taken.</p>
+<h3 id="tool_links"><a href="#tool_links">Tool Links</a></h3>
+<ul>
+<li><a href="http://seleniumhq.org/">Selenium</a> is a browser automation tool which can be <a href="http://www.phpunit.de/manual/3.1/en/selenium.html">integrated with PHPUnit</a></li>
+<li><a href="https://github.com/padraic/mockery">Mockery</a> is a Mock Object Framework which can be integrated with <a href="http://phpunit.de/">PHPUnit</a> or <a href="http://www.phpspec.net/">PHPSpec</a></li>
+<li><a href="https://github.com/phpspec/prophecy">Prophecy</a> is a highly opinionated yet very powerful and flexible PHP object mocking framework. It’s integrated with <a href="http://www.phpspec.net/">PHPSpec</a> and can be used with <a href="http://phpunit.de/">PHPUnit</a>.</li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="servers_and_deployment_title"><a href="#servers_and_deployment_title">Servers and Deployment</a></h1>
+<p>PHP applications can be deployed and run on production web servers in a number of ways.</p>
+<h2 id="platform_as_a_service_paas_title"><a href="#platform_as_a_service_paas_title">Platform as a Service (PaaS)</a></h2>
+<p>PaaS provides the system and network architecture necessary to run PHP applications on the web. This means little to no configuration for launching PHP applications or PHP frameworks.</p>
+<p>Recently PaaS has become a popular method for deploying, hosting, and scaling PHP applications of all sizes. You can find a list of <a href="#php_paas_providers">PHP PaaS “Platform as a Service” providers</a> in our <a href="#resources">resources section</a>.</p>
+<h2 id="virtual_or_dedicated_servers_title"><a href="#virtual_or_dedicated_servers_title">Virtual or Dedicated Servers</a></h2>
+<p>If you are comfortable with systems administration, or are interested in learning it, virtual or dedicated servers give you complete control of your application’s production environment.</p>
+<h3 id="nginx_and_phpfpm"><a href="#nginx_and_phpfpm">nginx and PHP-FPM</a></h3>
+<p>PHP, via PHP’s built-in FastCGI Process Manager (FPM), pairs really nicely with <a href="http://nginx.org">nginx</a>, which is a lightweight, high-performance web server. It uses less memory than Apache and can better handle more concurrent requests. This is especially important on virtual servers that don’t have much memory to spare.</p>
+<ul>
+<li><a href="http://nginx.org">Read more on nginx</a></li>
+<li><a href="http://php.net/manual/en/install.fpm.php">Read more on PHP-FPM</a></li>
+<li><a href="https://nealpoole.com/blog/2011/04/setting-up-php-fastcgi-and-nginx-dont-trust-the-tutorials-check-your-configuration/">Read more on setting up nginx and PHP-FPM securely</a></li>
+</ul>
+<h3 id="apache_and_php"><a href="#apache_and_php">Apache and PHP</a></h3>
+<p>PHP and Apache have a long history together. Apache is wildly configurable and has many available <a href="http://httpd.apache.org/docs/2.4/mod/">modules</a> to extend functionality. It is a popular choice for shared servers and an easy setup for PHP frameworks and open source apps like WordPress. Unfortunately, Apache uses more resources than nginx by default and cannot handle as many visitors at the same time.</p>
+<p>Apache has several possible configurations for running PHP. The most common and easiest to setup is the <a href="http://httpd.apache.org/docs/2.4/mod/prefork.html">prefork MPM</a> with mod_php5. While it isn’t the most memory efficient, it is the simplest to get working and to use. This is probably the best choice if you don’t want to dig too deeply into the server administration aspects. Note that if you use mod_php5 you MUST use the prefork MPM.</p>
+<p>Alternatively, if you want to squeeze more performance and stability out of Apache then you can take advantage of the same FPM system as nginx and run the <a href="http://httpd.apache.org/docs/2.4/mod/worker.html">worker MPM</a> or <a href="http://httpd.apache.org/docs/2.4/mod/event.html">event MPM</a> with mod_fastcgi or mod_fcgid. This configuration will be significantly more memory efficient and much faster but it is more work to set up.</p>
+<ul>
+<li><a href="http://httpd.apache.org/">Read more on Apache</a></li>
+<li><a href="http://httpd.apache.org/docs/2.4/mod/mpm_common.html">Read more on Multi-Processing Modules</a></li>
+<li><a href="http://www.fastcgi.com/mod_fastcgi/docs/mod_fastcgi.html">Read more on mod_fastcgi</a></li>
+<li><a href="http://httpd.apache.org/mod_fcgid/">Read more on mod_fcgid</a></li>
+</ul>
+<h2 id="shared_servers_title"><a href="#shared_servers_title">Shared Servers</a></h2>
+<p>PHP has shared servers to thank for its popularity. It is hard to find a host without PHP installed, but be sure it’s the latest version. Shared servers allow you and other developers to deploy websites to a single machine. The upside to this is that it has become a cheap commodity. The downside is that you never know what kind of a ruckus your neighboring tenants are going to create; loading down the server or opening up security holes are the main concerns. If your project’s budget can afford to avoid shared servers you should.</p>
+<h2 id="build_title"><a href="#build_title">Building and Deploying your Application</a></h2>
+<p>If you find yourself doing manual database schema changes or running your tests manually before updating your files (manually), think twice! With every additional manual task needed to deploy a new version of your app, the chances for potentially fatal mistakes increase. Whether you’re dealing with a simple update, a comprehensive build process or even a continuous integration strategy, <a href="http://en.wikipedia.org/wiki/Build_automation">build automation</a> is your friend.</p>
+<p>Among the tasks you might want to automate are:</p>
+<ul>
+<li>Dependency management</li>
+<li>Compilation, minification of your assets</li>
+<li>Running tests</li>
+<li>Creation of documentation</li>
+<li>Packaging</li>
+<li>Deployment</li>
+</ul>
+<h3 id="build_automation_tools"><a href="#build_automation_tools">Build Automation Tools</a></h3>
+<p>Build tools can be described as a collection of scripts that handle common tasks of software deployment. The build tool is not a part of your software, it acts on your software from ‘outside’.</p>
+<p>There are many open source tools available to help you with build automation, some are written in PHP others aren’t. This shouldn’t hold you back from using them, if they’re better suited for the specific job. Here are a few examples:</p>
+<p><a href="http://www.phing.info/">Phing</a> is the easiest way to get started with automated deployment in the PHP world. With Phing you can control your packaging, deployment or testing process from within a simple XML build file. Phing (which is based on <a href="http://ant.apache.org/">Apache Ant</a>) provides a rich set of tasks usually needed to install or update a web app and can be extended with additional custom tasks, written in PHP.</p>
+<p><a href="https://github.com/capistrano/capistrano/wiki">Capistrano</a> is a system for <em>intermediate-to-advanced programmers</em> to execute commands in a structured, repeatable way on one or more remote machines. It is pre-configured for deploying Ruby on Rails applications, however people are <strong>successfully deploying PHP systems</strong> with it. Successful use of Capistrano depends on a working knowledge of Ruby and Rake.</p>
+<p>Dave Gardner’s blog post <a href="http://www.davegardner.me.uk/blog/2012/02/13/php-deployment-with-capistrano/">PHP Deployment with Capistrano</a> is a good starting point for PHP developers interested in Capistrano.</p>
+<p><a href="http://www.opscode.com/chef/">Chef</a> is more than a deployment framework, it is a very powerful Ruby based system integration framework that doesn’t just deploy your app but can build your whole server environment or virtual boxes.</p>
+<p>Chef resources for PHP developers:</p>
+<ul>
+<li><a href="http://www.jasongrimes.org/2012/06/managing-lamp-environments-with-chef-vagrant-and-ec2-1-of-3/">Three part blog series about deploying a LAMP application with Chef, Vagrant, and EC2</a></li>
+<li><a href="https://github.com/opscode-cookbooks/php">Chef Cookbook which installs and configures PHP 5.3 and the PEAR package management system</a></li>
+</ul>
+<p>Further reading:</p>
+<ul>
+<li><a href="http://net.tutsplus.com/tutorials/other/automate-your-projects-with-apache-ant/">Automate your project with Apache Ant</a></li>
+<li><a href="http://maven.apache.org/">Maven</a>, a build framework based on Ant and <a href="http://www.php-maven.org/">how to use it with PHP</a></li>
+</ul>
+<h3 id="continuous_integration"><a href="#continuous_integration">Continuous Integration</a></h3>
+<blockquote>
+<p>Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily — leading to multiple integrations per day. Many teams find that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.</p>
+</blockquote>
+<p><em>– Martin Fowler</em></p>
+<p>There are different ways to implement continuous integration for PHP. Recently <a href="https://travis-ci.org/">Travis CI</a> has done a great job of making continuous integration a reality even for small projects. Travis CI is a hosted continuous integration service for the open source community. It is integrated with GitHub and offers first class support for many languages including PHP.</p>
+<p>Further reading:</p>
+<ul>
+<li><a href="http://jenkins-ci.org/">Continuous Integration with Jenkins</a></li>
+<li><a href="http://www.phptesting.org/">Continuous Integration with PHPCI</a></li>
+<li><a href="http://www.jetbrains.com/teamcity/">Continuous Integration with Teamcity</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="caching_title"><a href="#caching_title">Caching</a></h1>
+<p>PHP is pretty quick by itself, but bottlenecks can arise when you make remote connections, load files, etc. Thankfully, there are various tools available to speed up certain parts of your application, or reduce the number of times these various time consuming tasks need to run.</p>
+<h2 id="bytecode_cache_title"><a href="#bytecode_cache_title">Bytecode Cache</a></h2>
+<p>When a PHP file is executed, under the hood it is first compiled to bytecode (also known as opcode) and, only then, the bytecode is executed. If a PHP file is not modified, the bytecode will always be the same. This means that the compilation step is a waste of CPU resources.</p>
+<p>This is where Bytecode cache comes in. It prevents redundant compilation by storing bytecode in memory and reusing it on successive calls. Setting up bytecode cache is a matter of minutes, and your application will speed up significantly. There’s really no reason not to use it.</p>
+<p>Popular bytecodes caches are:</p>
+<ul>
+<li><a href="http://php.net/manual/en/book.apc.php">APC</a></li>
+<li><a href="http://xcache.lighttpd.net/">XCache</a></li>
+<li><a href="http://www.zend.com/products/server/">Zend Optimizer+</a> (part of Zend Server package)</li>
+<li><a href="http://www.iis.net/download/wincacheforphp">WinCache</a> (extension for MS Windows Server)</li>
+</ul>
+<h2 id="object_caching_title"><a href="#object_caching_title">Object Caching</a></h2>
+<p>There are times when it can be beneficial to cache individual objects in your code, such as with data that is expensive to get or database calls where the result is unlikely to change. You can use object caching software to hold these pieces of data in memory for extremely fast access later on. If you save these items to a data store after you retrieve them, then pull them directly from the cache for following requests, you can gain a significant improvement in performance as well as reduce the load on your database servers.</p>
+<p>Many of the popular bytecode caching solutions let you cache custom data as well, so there’s even more reason to take advantage of them. APC, XCache, and WinCache all provide APIs to save data from your PHP code to their memory cache.</p>
+<p>The most commonly used memory object caching systems are APC and memcached. APC is an excellent choice for object caching, it includes a simple API for adding your own data to its memory cache and is very easy to setup and use. The one real limitation of APC is that it is tied to the server it’s installed on. Memcached on the other hand is installed as a separate service and can be accessed across the network, meaning that you can store objects in a hyper-fast data store in a central location and many different systems can pull from it.</p>
+<p>Note that when running PHP as a (Fast-)CGI application inside your webserver, every PHP process will have its own cache, i.e. APC data is not shared between your worker processes. In these cases, you might want to consider using memcached instead, as it’s not tied to the PHP processes.</p>
+<p>In a networked configuration APC will usually outperform memcached in terms of access speed, but memcached will be able to scale up faster and further. If you do not expect to have multiple servers running your application, or do not need the extra features that memcached offers then APC is probably your best choice for object caching.</p>
+<p>Example logic using APC:</p>
+<pre><code>&lt;?php
+// check if there is data saved as &#39;expensive_data&#39; in cache
+$data = apc_fetch(&#39;expensive_data&#39;);
+if ($data === false) {
+    // data is not in cache; save result of expensive call for later use
+    apc_add(&#39;expensive_data&#39;, $data = get_expensive_data());
+}
+
+print_r($data);</code></pre>
+<p>Learn more about popular object caching systems:</p>
+<ul>
+<li><a href="http://php.net/manual/en/ref.apc.php">APC Functions</a></li>
+<li><a href="http://memcached.org/">Memcached</a></li>
+<li><a href="http://redis.io/">Redis</a></li>
+<li><a href="http://xcache.lighttpd.net/wiki/XcacheApi">XCache APIs</a></li>
+<li><a href="http://www.php.net/manual/en/ref.wincache.php">WinCache Functions</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<h1 id="resources_title"><a href="#resources_title">Resources</a></h1>
+<h2 id="from_the_source"><a href="#from_the_source">From the Source</a></h2>
+<ul>
+<li><a href="http://php.net/">PHP Website</a></li>
+<li><a href="http://php.net/docs.php">PHP Documentation</a></li>
+</ul>
+<h2 id="people_to_follow"><a href="#people_to_follow">People to Follow</a></h2>
+<ul>
+<li><a href="http://twitter.com/rasmus">Rasmus Lerdorf</a></li>
+<li><a href="http://twitter.com/fabpot">Fabien Potencier</a></li>
+<li><a href="http://twitter.com/derickr">Derick Rethans</a></li>
+<li><a href="http://twitter.com/shiflett">Chris Shiflett</a></li>
+<li><a href="http://twitter.com/s_bergmann">Sebastian Bergmann</a></li>
+<li><a href="http://twitter.com/weierophinney">Matthew Weier O’Phinney</a></li>
+<li><a href="http://twitter.com/padraicb">Pádraic Brady</a></li>
+<li><a href="http://twitter.com/ircmaxell">Anthony Ferrara</a></li>
+<li><a href="http://twitter.com/nikita_ppv">Nikita Popov</a></li>
+</ul>
+<h2 id="mentoring"><a href="#mentoring">Mentoring</a></h2>
+<ul>
+<li><a href="http://phpmentoring.org/">phpmentoring.org</a> - Formal, peer to peer mentoring in the PHP community.</li>
+</ul>
+<h2 id="php_paas_providers"><a href="#php_paas_providers">PHP PaaS Providers</a></h2>
+<ul>
+<li><a href="https://pagodabox.com/">PagodaBox</a></li>
+<li><a href="https://appfog.com/">AppFog</a></li>
+<li><a href="https://heroku.com">Heroku</a> (PHP support is undocumented but based on stable Facebook partnership <a href="http://net.tutsplus.com/tutorials/php/quick-tip-deploy-php-to-heroku-in-seconds/">link</a>)</li>
+<li><a href="http://fortrabbit.com/">fortrabbit</a></li>
+<li><a href="http://www.engineyard.com/products/orchestra/">Engine Yard Orchestra PHP Platform</a></li>
+<li><a href="http://www.redhat.com/products/cloud-computing/openshift/">Red Hat OpenShift Platform</a></li>
+<li><a href="http://docs.dotcloud.com/services/php/">dotCloud</a></li>
+<li><a href="http://aws.amazon.com/elasticbeanstalk/">AWS Elastic Beanstalk</a></li>
+<li><a href="https://www.cloudcontrol.com/">cloudControl</a></li>
+<li><a href="http://www.windowsazure.com/">Windows Azure</a></li>
+<li><a href="http://www.phpcloud.com/develop">Zend Developer Cloud</a></li>
+<li><a href="https://developers.google.com/appengine/docs/php/gettingstarted/">Google App Engine</a></li>
+</ul>
+<h2 id="frameworks_title"><a href="#frameworks_title">Frameworks</a></h2>
+<p>Rather than re-invent the wheel, many PHP developers use frameworks to build out web applications. Frameworks abstract away many of the low-level concerns and provide helpful, easy-to-use interfaces to complete common tasks.</p>
+<p>You do not need to use a framework for every project. Sometimes plain PHP is the right way to go, but if you do need a framework then there are three main types available:</p>
+<ul>
+<li>Micro Frameworks</li>
+<li>Full-Stack Frameworks</li>
+<li>Component Frameworks</li>
+</ul>
+<p>Micro-frameworks are essentially a wrapper to route a HTTP request to a callback, controller, method, etc as quickly as possible, and sometimes come with a few extra libraries to assist development such as basic database wrappers and the like. They are prominently used to build remote HTTP services.</p>
+<p>Many frameworks add a considerable number of features on top of what is available in a micro-framework and these are known Full-Stack Frameworks. These often come bundled with ORMs, Authentication packages, etc.</p>
+<p>Component-based frameworks are collections of specialized and single-purpose libraries. Disparate component-based frameworks can be used together to make a micro- or full-stack framework.</p>
+<ul>
+<li><a href="https://github.com/codeguy/php-the-right-way/wiki/Frameworks">Popular PHP Frameworks</a></li>
+</ul>
+<h2 id="components_title"><a href="#components_title">Components</a></h2>
+<p>As mentioned above “Components” are another approach to the common goal of creating, distributing and implementing shared code. Various component repositories exist, the main two of which are:</p>
+<ul>
+<li><a href="/#composer_and_packagist">Packagist</a></li>
+<li><a href="/#pear">PEAR</a></li>
+</ul>
+<p>Both of these repositories have command line tools associated with them to help the installation and upgrade processes, and have been explained in more detail in the <a href="/#dependency_management">Dependency Management</a> section.</p>
+<p>There are also component-based frameworks, which allow you to use their components with minimal (or no) requirements. For example, you can use the <a href="https://github.com/fuelphp/validation">FuelPHP Validation package</a>, without needing to use the FuelPHP framework itself. These projects are essentially just another repository for reusable components:</p>
+<ul>
+<li><a href="http://auraphp.github.com/">Aura</a></li>
+<li><a href="https://github.com/fuelphp">FuelPHP (2.0 only)</a></li>
+<li><a href="https://github.com/illuminate">Laravel’s “Illuminate Components”</a></li>
+<li><a href="http://symfony.com/doc/current/components/index.html">Symfony Components</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+<ul style="font-size: 80%;">
+<li><a href="http://twitter.com/codeguy">Josh Lockhart</a></li>
+<li><a href="http://krisjordan.com/">Kris Jordan</a></li>
+<li><a href="http://philsturgeon.co.uk/">Phil Sturgeon</a></li>
+<li><a href="http://www.newmediacampaigns.com">New Media Campaigns</a></li>
+<li>Licensed <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC Attribution-NonCommercial-ShareAlike 3.0 ... </a>.</li>
+</ul>
+</body>
+</html>
